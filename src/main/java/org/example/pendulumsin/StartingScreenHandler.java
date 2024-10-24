@@ -1,50 +1,60 @@
 package org.example.pendulumsin;
 
-import javafx.animation.Interpolator;
-import javafx.animation.PathTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.ArcType;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.shape.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
 public class StartingScreenHandler implements Initializable {
     @FXML
-    StackPane pendulum;
+    Rectangle string;
+    @FXML Circle ball;
 
-    private Stage stage;
+    Stage mstage;
     public void setStage(Stage stage) {
-        this.stage = stage;
+        mstage = stage;
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Arc patharc = new Arc();
-        patharc.setType(ArcType.OPEN);
-        patharc.setCenterX(0);
-        patharc.setCenterY(0);
-        patharc.setRadiusX(50);
-        patharc.setRadiusY(50);
-        patharc.setStartAngle(180);
-        patharc.setLength(180);
 
-        animate(patharc);
     }
-    void animate(Arc patharc){
-        PathTransition pt = new PathTransition(Duration.seconds(3), patharc, pendulum);
-        pt.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        pt.setCycleCount(PathTransition.INDEFINITE);
-        pt.interpolatorProperty().setValue(Interpolator.LINEAR);
-        pt.setAutoReverse(true);
 
+    @FXML
+    public void playevent() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("PendulumPhysicsScreen.fxml"));
+        Parent root = loader.load();
+        PPScreenHandler pp = new PPScreenHandler();
+        pp.setStage(mstage);
+        Scene scene = new Scene(root);
+        mstage.setScene(scene);
 
+    }
+    @FXML
+    public void settingsevent() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScreen.fxml"));
+        Parent root = loader.load();
+       SettingsScreenHandler ss = new SettingsScreenHandler();
+        ss.setStage(mstage);
+        Scene scene = new Scene(root);
+        mstage.setScene(scene);
 
-        pt.play();
+    }
+    @FXML
+    public void infoevent() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoScreen.fxml"));
+        Parent root = loader.load();
+        InfoScreenHandler ish = new InfoScreenHandler();
+        ish.setStage(mstage);
+        Scene scene = new Scene(root);
+        mstage.setScene(scene);
+
     }
 }
