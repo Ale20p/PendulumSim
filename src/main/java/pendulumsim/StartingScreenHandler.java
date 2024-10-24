@@ -41,8 +41,8 @@ public class StartingScreenHandler implements Initializable {
     public void settingsevent() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScreen.fxml"));
         Parent root = loader.load();
-       SettingsScreenHandler ss = new SettingsScreenHandler();
-        ss.setStage(mstage);
+        SettingsScreenHandler controller = new SettingsScreenHandler();
+        controller.setStage(mstage);
         Scene scene = new Scene(root);
         mstage.setScene(scene);
 
@@ -51,8 +51,8 @@ public class StartingScreenHandler implements Initializable {
     public void infoevent() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoScreen.fxml"));
         Parent root = loader.load();
-        InfoScreenHandler ish = new InfoScreenHandler();
-        ish.setStage(mstage);
+        InfoScreenHandler controller = new InfoScreenHandler();
+        controller.setStage(mstage);
         Scene scene = new Scene(root);
         mstage.setScene(scene);
 
