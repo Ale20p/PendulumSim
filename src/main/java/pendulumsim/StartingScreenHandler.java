@@ -31,8 +31,8 @@ public class StartingScreenHandler implements Initializable {
     public void playevent() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("PendulumPhysicsScreen.fxml"));
         Parent root = loader.load();
-        PPScreenHandler pp = new PPScreenHandler();
-        pp.setStage(mstage);
+        PPScreenHandler controller = loader.getController();
+        controller.setStage(mstage);
         Scene scene = new Scene(root);
         mstage.setScene(scene);
 
@@ -41,7 +41,7 @@ public class StartingScreenHandler implements Initializable {
     public void settingsevent() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScreen.fxml"));
         Parent root = loader.load();
-        SettingsScreenHandler controller = new SettingsScreenHandler();
+        SettingsScreenHandler controller = loader.getController();
         controller.setStage(mstage);
         Scene scene = new Scene(root);
         mstage.setScene(scene);
