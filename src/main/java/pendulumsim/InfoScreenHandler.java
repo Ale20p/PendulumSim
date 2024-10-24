@@ -1,4 +1,4 @@
-package org.example.pendulumsin;
+package pendulumsim;
 
 import javafx.fxml.Initializable;
 import javafx.stage.Stage;

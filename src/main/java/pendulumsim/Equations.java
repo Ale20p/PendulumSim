@@ -1,4 +1,4 @@
-package org.example.pendulumsin;
+package pendulumsim;
 
 public class Equations {
     private double length;

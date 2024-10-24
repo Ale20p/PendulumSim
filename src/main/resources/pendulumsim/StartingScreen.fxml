@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.pendulumsin.StartingScreenHandler">
+<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.StartingScreenHandler">
    <children>
       <Text fill="#ffb0b0" layoutX="364.0" layoutY="125.0" stroke="#ffd09b" strokeLineCap="ROUND" strokeWidth="0.0" text="Pendulum Sim" textAlignment="CENTER">
          <font>
@@ -19,17 +19,17 @@
             <Font size="22.0" />
          </font>
       </Text>
-      <Button layoutX="466.0" layoutY="589.0" mnemonicParsing="false" onAction="#playevent" prefHeight="69.0" prefWidth="273.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4;" text="Start" textAlignment="CENTER" textFill="#ffb0b0">
+      <Button layoutX="466.0" layoutY="589.0" mnemonicParsing="false" onAction="#playevent" prefHeight="69.0" prefWidth="273.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4; -fx-border-radius: 4;" text="Start" textAlignment="CENTER" textFill="#ffb0b0">
          <font>
             <Font size="31.0" />
          </font>
       </Button>
-      <Button layoutX="466.0" layoutY="671.0" mnemonicParsing="false" onAction="#infoevent" prefHeight="58.0" prefWidth="136.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4;" text="Info" textFill="#ffb0b0">
+      <Button layoutX="466.0" layoutY="671.0" mnemonicParsing="false" onAction="#infoevent" prefHeight="58.0" prefWidth="136.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4; -fx-border-radius: 4;" text="Info" textFill="#ffb0b0">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
-      <Button layoutX="603.0" layoutY="671.0" mnemonicParsing="false" onAction="#settingsevent" prefHeight="58.0" prefWidth="136.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4;" text="Settings" textFill="#ffb0b0">
+      <Button layoutX="603.0" layoutY="671.0" mnemonicParsing="false" onAction="#settingsevent" prefHeight="58.0" prefWidth="136.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4; -fx-border-radius: 4;" text="Settings" textFill="#ffb0b0">
          <font>
             <Font size="22.0" />
          </font>

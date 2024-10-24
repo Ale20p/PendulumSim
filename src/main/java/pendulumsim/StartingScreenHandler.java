@@ -1,4 +1,4 @@
-package org.example.pendulumsin;
+package pendulumsim;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

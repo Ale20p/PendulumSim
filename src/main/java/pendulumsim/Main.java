@@ -1,4 +1,4 @@
-package org.example.pendulumsin;
+package pendulumsim;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +17,9 @@ public class Main extends Application {
         controller.setStage(stage);
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("PendulumSim");
         stage.show();
+        stage.setResizable(false);
     }
 
     public static void main(String[] args) {
