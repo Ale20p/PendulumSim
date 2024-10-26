@@ -20,4 +20,12 @@ public class InfoScreenHandler implements Initializable {
 
     }
 
+    public void backToStartEvent() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartingScreen.fxml"));
+        Parent root = loader.load();
+        StartingScreenHandler controller = loader.getController();
+        controller.setStage(mstage);
+        Scene scene = new Scene(root);
+        mstage.setScene(scene);
+    }
 }
