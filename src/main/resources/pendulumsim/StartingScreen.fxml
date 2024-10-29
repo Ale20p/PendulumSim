@@ -2,12 +2,13 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.StartingScreenHandler">
+<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.StartingScreenHandler">
    <children>
       <Text fill="#ffb0b0" layoutX="364.0" layoutY="125.0" stroke="#ffd09b" strokeLineCap="ROUND" strokeWidth="0.0" text="Pendulum Sim" textAlignment="CENTER">
          <font>
@@ -39,7 +40,11 @@
             <Font size="41.0" />
          </font>
       </Text>
-      <Rectangle fx:id="string" arcHeight="5.0" arcWidth="5.0" fill="#ffb0b0" height="239.0" layoutX="601.0" layoutY="250.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="18.0" />
-      <Circle fx:id="ball" fill="#ffecc8" layoutX="610.0" layoutY="489.0" radius="65.0" stroke="#ffd09b" strokeType="INSIDE" strokeWidth="4.0" />
+      <Pane fx:id="pendulumholder" layoutX="545.0" layoutY="250.0" prefWidth="130.0">
+         <children>
+            <Rectangle fx:id="string" arcHeight="5.0" arcWidth="6.0" fill="#ffb0b0" height="240.0" layoutX="56.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="18.0" />
+            <Circle fx:id="ball" fill="#ffecc8" layoutX="65.0" layoutY="239.0" radius="65.0" stroke="#ffd09b" strokeType="INSIDE" strokeWidth="4.0" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>

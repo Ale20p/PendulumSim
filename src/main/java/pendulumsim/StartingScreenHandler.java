@@ -1,12 +1,20 @@
 package pendulumsim;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.shape.*;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -15,8 +23,7 @@ import java.util.ResourceBundle;
 
 public class StartingScreenHandler implements Initializable {
     @FXML
-    Rectangle string;
-    @FXML Circle ball;
+    Pane pendulumholder;
 
     Stage mstage;
     public void setStage(Stage stage) {
@@ -24,7 +31,16 @@ public class StartingScreenHandler implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        int posx = (int) (pendulumholder.getPrefWidth()/2);
+        Rotate rotation = new Rotate(75, posx, 0);
+        pendulumholder.getTransforms().add(rotation);
+        KeyValue initkeyvalue = new KeyValue(rotation.angleProperty(),-75 ,Interpolator.EASE_BOTH);
+        KeyFrame initkeyframe = new KeyFrame(Duration.seconds(6), initkeyvalue);
+        Timeline anim = new Timeline(initkeyframe);
+        anim.setAutoReverse(true);
+        anim.setCycleCount(Timeline.INDEFINITE);
+        anim.play();
+        System.out.println("Main Screen Animation Initialized");
     }
 
     @FXML
