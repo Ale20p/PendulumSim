@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 public class PPScreenHandler implements Initializable {
     private Stage mstage;
     @FXML AnchorPane PPSpane;
-    @FXML Line string;
+        Line string = new Line();
     @FXML Circle ball;
     @FXML TextField lengthInput;
     @FXML TextField amplitudeInput;
@@ -71,6 +71,26 @@ public class PPScreenHandler implements Initializable {
         controller.setStage(mstage);
         Scene scene = new Scene(root);
         mstage.setScene(scene);
+    }
+    @FXML
+    public void settingsevent() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScreen.fxml"));
+        Parent root = loader.load();
+        SettingsScreenHandler controller = loader.getController();
+        controller.setStage(mstage);
+        Scene scene = new Scene(root);
+        mstage.setScene(scene);
+
+    }
+    @FXML
+    public void infoevent() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoScreen.fxml"));
+        Parent root = loader.load();
+        InfoScreenHandler controller = loader.getController();
+        controller.setStage(mstage);
+        Scene scene = new Scene(root);
+        mstage.setScene(scene);
+
     }
 
     public void  startEvent() {

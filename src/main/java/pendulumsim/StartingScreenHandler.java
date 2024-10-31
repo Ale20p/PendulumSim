@@ -31,11 +31,15 @@ public class StartingScreenHandler implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        double setgrav = 9.81;
+        double length = 2;
+        double amplitude = 75;
+        double halfperiod = Equations.calculatePeriod(length,setgrav)/2;
         int posx = (int) (pendulumholder.getPrefWidth()/2);
-        Rotate rotation = new Rotate(75, posx, 0);
+        Rotate rotation = new Rotate(amplitude, posx, 0);
         pendulumholder.getTransforms().add(rotation);
         KeyValue initkeyvalue = new KeyValue(rotation.angleProperty(),-75 ,Interpolator.EASE_BOTH);
-        KeyFrame initkeyframe = new KeyFrame(Duration.seconds(6), initkeyvalue);
+        KeyFrame initkeyframe = new KeyFrame(Duration.seconds(halfperiod), initkeyvalue);
         Timeline anim = new Timeline(initkeyframe);
         anim.setAutoReverse(true);
         anim.setCycleCount(Timeline.INDEFINITE);

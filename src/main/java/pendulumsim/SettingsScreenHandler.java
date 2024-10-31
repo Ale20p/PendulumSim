@@ -1,5 +1,6 @@
 package pendulumsim;
 
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -27,5 +28,25 @@ public class SettingsScreenHandler implements Initializable {
         controller.setStage(mstage);
         Scene scene = new Scene(root);
         mstage.setScene(scene);
+    }
+    @FXML
+    public void settingsevent() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScreen.fxml"));
+        Parent root = loader.load();
+        SettingsScreenHandler controller = loader.getController();
+        controller.setStage(mstage);
+        Scene scene = new Scene(root);
+        mstage.setScene(scene);
+
+    }
+    @FXML
+    public void infoevent() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoScreen.fxml"));
+        Parent root = loader.load();
+        InfoScreenHandler controller = loader.getController();
+        controller.setStage(mstage);
+        Scene scene = new Scene(root);
+        mstage.setScene(scene);
+
     }
 }
