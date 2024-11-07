@@ -33,15 +33,15 @@ public class PPScreenHandler implements Initializable {
     @FXML TextField amplitudeInput;
     @FXML TextField gravityInput;
     @FXML TextField massInput;
+    @FXML TextField periodInput;
     @FXML Button backButton;
     @FXML Pane pendulumHolder;
 
     private double length;
     private double gravity;
     private double amplitude;
-    private double angularFrequency;
-    private double time;
     private double mass;
+    private Timeline animation;
 
     public void setStage(Stage stage) {
         mstage = stage;
@@ -55,11 +55,10 @@ public class PPScreenHandler implements Initializable {
 
         KeyValue initkeyvalue = new KeyValue(rotation.angleProperty(),-75 , Interpolator.EASE_BOTH);
         KeyFrame initkeyframe = new KeyFrame(Duration.seconds(6), initkeyvalue);
-        Timeline animation = new Timeline(initkeyframe);
+        animation = new Timeline(initkeyframe);
 
         animation.setAutoReverse(true);
         animation.setCycleCount(Timeline.INDEFINITE);
-        animation.play();
     }
 
     public void backToStartEvent() throws IOException {
@@ -72,13 +71,20 @@ public class PPScreenHandler implements Initializable {
     }
 
     public void  startEvent() {
-        if (lengthInput.getText().isEmpty()) {
+        if (lengthInput.getText().isEmpty() && lengthSlider.getValue() == 0.0) {
+            lengthInput.setText("240");
+            length = Double.parseDouble(lengthInput.getText());
+            string.setHeight(length);
+            ball.setLayoutY(length);
+        } else if (lengthInput.getText().isEmpty()) {
             lengthInput.setText(String.valueOf(lengthSlider.getValue()));
             length = lengthSlider.getValue();
             string.setHeight(length);
+            ball.setLayoutY(length);
         } else {
             length = Double.parseDouble(lengthInput.getText());
             string.setHeight(length);
+            ball.setLayoutY(length);
         }
 
         if (gravityInput.getText().isEmpty()) {
@@ -96,20 +102,31 @@ public class PPScreenHandler implements Initializable {
         }
 
         if (massInput.getText().isEmpty()) {
-            massInput.setText("0.5");
+            massInput.setText("45");
             mass = Double.parseDouble(massInput.getText());
+            ball.setRadius(mass);
         } else {
             mass = Double.parseDouble(massInput.getText());
+            if (mass > 70.0) {
+                ball.setRadius(70.0);
+            } else if (mass < 25.0) {
+                ball.setRadius(25.0);
+            } else {
+                ball.setRadius(mass);
+            }
         }
+
+        periodInput.setText(String.valueOf(Equations.calculatePeriod(length, gravity)));
+
+        animation.play();
     }
 
     public void pauseEvent() throws IOException {
-
+        animation.pause();
     }
 
     public void resetEvent() throws IOException {
-        ball.setCenterX(0);
-        ball.setCenterY(0);
+
     }
 
     @FXML
@@ -130,6 +147,5 @@ public class PPScreenHandler implements Initializable {
         controller.setStage(mstage);
         Scene scene = new Scene(root);
         mstage.setScene(scene);
-
     }
 }

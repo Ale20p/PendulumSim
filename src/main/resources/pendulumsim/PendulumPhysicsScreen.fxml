@@ -13,27 +13,27 @@
 
 <AnchorPane fx:id="PPSpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.PPScreenHandler">
    <children>
-      <TextField fx:id="lengthInput" layoutX="286.0" layoutY="595.0" promptText="enter legnth" />
-      <TextField fx:id="amplitudeInput" layoutX="286.0" layoutY="561.0" promptText="enter amplitude" />
-      <TextField fx:id="gravityInput" layoutX="286.0" layoutY="521.0" promptText="enter gravity" />
-      <TextField fx:id="massInput" layoutX="286.0" layoutY="483.0" promptText="enter mass" />
-      <Text layoutX="217.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mass" />
-      <Text layoutX="217.0" layoutY="538.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gravity" />
-      <Text layoutX="218.0" layoutY="578.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amplitude" />
-      <Text layoutX="217.0" layoutY="612.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Length" />
+      <TextField fx:id="lengthInput" layoutX="118.0" layoutY="595.0" promptText="enter legnth" />
+      <TextField fx:id="amplitudeInput" layoutX="118.0" layoutY="561.0" promptText="enter amplitude" />
+      <TextField fx:id="gravityInput" layoutX="118.0" layoutY="521.0" promptText="enter gravity" />
+      <TextField fx:id="massInput" layoutX="118.0" layoutY="483.0" promptText="enter mass" />
+      <Text layoutX="62.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mass" />
+      <Text layoutX="57.0" layoutY="538.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gravity" />
+      <Text layoutX="48.0" layoutY="578.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amplitude" />
+      <Text layoutX="57.0" layoutY="612.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Length" />
       <Button fx:id="backButton" layoutX="68.0" layoutY="692.0" mnemonicParsing="false" onAction="#backToStartEvent" prefHeight="58.0" prefWidth="136.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4; -fx-border-radius: 4;" text="Back" textFill="#ffb0b0">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
-      <Button fx:id="startButton" layoutX="487.0" layoutY="725.0" mnemonicParsing="false" onAction="#startEvent" text="Start" />
-      <Button fx:id="pauseButton" layoutX="577.0" layoutY="725.0" mnemonicParsing="false" onAction="#pauseEvent" text="Pause" />
-      <Button fx:id="resetButton" layoutX="680.0" layoutY="725.0" mnemonicParsing="false" onAction="#resetEvent" text="Reset" />
+      <Button fx:id="startButton" layoutX="487.0" layoutY="616.0" mnemonicParsing="false" onAction="#startEvent" text="Start" />
+      <Button fx:id="pauseButton" layoutX="577.0" layoutY="616.0" mnemonicParsing="false" onAction="#pauseEvent" text="Pause" />
+      <Button fx:id="resetButton" layoutX="681.0" layoutY="616.0" mnemonicParsing="false" onAction="#resetEvent" text="Reset" />
       <Slider fx:id="lengthSlider" blockIncrement="40.0" layoutX="1085.0" layoutY="302.0" max="500.0" orientation="VERTICAL" scaleX="3.0" scaleY="3.0" />
-      <Pane fx:id="pendulumHolder" layoutX="559.0" layoutY="230.0" prefWidth="130.0">
+      <Pane fx:id="pendulumHolder" layoutX="559.0" layoutY="150.0" prefWidth="130.0">
          <children>
-            <Rectangle fx:id="string" arcHeight="5.0" arcWidth="6.0" fill="#ffb0b0" height="240.0" layoutX="56.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="18.0" />
-            <Circle fx:id="ball" fill="#ffecc8" layoutX="65.0" layoutY="239.0" radius="65.0" stroke="#ffd09b" strokeType="INSIDE" strokeWidth="4.0" />
+            <Rectangle fx:id="string" arcHeight="5.0" arcWidth="6.0" fill="#ffb0b0" height="240.0" layoutX="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="10.0" />
+            <Circle fx:id="ball" fill="#ffecc8" layoutX="65.0" layoutY="240.0" radius="45.0" stroke="#ffd09b" strokeType="INSIDE" strokeWidth="4.0" />
          </children>
       </Pane>
       <ButtonBar layoutX="11.0" layoutY="10.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="54.0" prefWidth="233.0">
@@ -50,5 +50,7 @@
             </Button>
          </buttons>
       </ButtonBar>
+      <Text layoutX="294.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Period" />
+      <TextField fx:id="periodInput" layoutX="346.0" layoutY="709.0" promptText="Period value" />
    </children>
 </AnchorPane>
