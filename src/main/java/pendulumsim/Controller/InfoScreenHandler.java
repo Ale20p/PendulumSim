@@ -1,4 +1,4 @@
-package pendulumsim;
+package pendulumsim.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,7 +22,7 @@ public class InfoScreenHandler implements Initializable {
     }
 
     public void backToStartEvent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartingScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/StartingScreen.fxml"));
         Parent root = loader.load();
         StartingScreenHandler controller = loader.getController();
         controller.setStage(mstage);
@@ -31,7 +31,7 @@ public class InfoScreenHandler implements Initializable {
     }
     @FXML
     public void settingsevent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/SettingsScreen.fxml"));
         Parent root = loader.load();
         SettingsScreenHandler controller = loader.getController();
         controller.setStage(mstage);
@@ -40,7 +40,7 @@ public class InfoScreenHandler implements Initializable {
 
     }
     public void infoevent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/InfoScreen.fxml"));
         Parent root = loader.load();
         InfoScreenHandler controller = loader.getController();
         controller.setStage(mstage);

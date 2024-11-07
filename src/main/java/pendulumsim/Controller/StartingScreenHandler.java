@@ -1,4 +1,4 @@
-package pendulumsim;
+package pendulumsim.Controller;
 
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -10,11 +10,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import pendulumsim.Model.Equations;
 
 import java.io.IOException;
 import java.net.URL;
@@ -49,7 +48,7 @@ public class StartingScreenHandler implements Initializable {
 
     @FXML
     public void playevent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("PendulumPhysicsScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/PendulumPhysicsScreen.fxml"));
         Parent root = loader.load();
         PPScreenHandler controller = loader.getController();
         controller.setStage(mstage);
@@ -59,7 +58,7 @@ public class StartingScreenHandler implements Initializable {
     }
     @FXML
     public void settingsevent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/SettingsScreen.fxml"));
         Parent root = loader.load();
         SettingsScreenHandler controller = loader.getController();
         controller.setStage(mstage);
@@ -69,7 +68,7 @@ public class StartingScreenHandler implements Initializable {
     }
     @FXML
     public void infoevent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/InfoScreen.fxml"));
         Parent root = loader.load();
         InfoScreenHandler controller = loader.getController();
         controller.setStage(mstage);

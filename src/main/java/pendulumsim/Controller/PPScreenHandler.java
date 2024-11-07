@@ -1,4 +1,4 @@
-package pendulumsim;
+package pendulumsim.Controller;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
@@ -11,13 +11,12 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import pendulumsim.Model.Equations;
 
 import java.io.IOException;
 import java.net.URL;
@@ -62,7 +61,7 @@ public class PPScreenHandler implements Initializable {
     }
 
     public void backToStartEvent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("StartingScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/StartingScreen.fxml"));
         Parent root = loader.load();
         StartingScreenHandler controller = loader.getController();
         controller.setStage(mstage);
@@ -131,7 +130,7 @@ public class PPScreenHandler implements Initializable {
 
     @FXML
     public void settingsevent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SettingsScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/SettingsScreen.fxml"));
         Parent root = loader.load();
         SettingsScreenHandler controller = loader.getController();
         controller.setStage(mstage);
@@ -141,7 +140,7 @@ public class PPScreenHandler implements Initializable {
     }
     @FXML
     public void infoevent() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("InfoScreen.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/InfoScreen.fxml"));
         Parent root = loader.load();
         InfoScreenHandler controller = loader.getController();
         controller.setStage(mstage);

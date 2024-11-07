@@ -1,4 +1,4 @@
-package pendulumsim;
+package pendulumsim.Model;
 
 public class Equations {
     private double length;

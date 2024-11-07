@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="PPSpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.PPScreenHandler">
+<AnchorPane fx:id="PPSpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.Controller.PPScreenHandler">
    <children>
       <TextField fx:id="lengthInput" layoutX="118.0" layoutY="595.0" promptText="enter legnth" />
       <TextField fx:id="amplitudeInput" layoutX="118.0" layoutY="561.0" promptText="enter amplitude" />

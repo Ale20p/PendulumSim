@@ -1,8 +1,12 @@
-module org.example.pendulumsin {
+module pendulumsin {
     requires javafx.controls;
     requires javafx.fxml;
 
 
     opens pendulumsim to javafx.fxml;
     exports pendulumsim;
+    exports pendulumsim.Controller;
+    opens pendulumsim.Controller to javafx.fxml;
+    exports pendulumsim.Model;
+    opens pendulumsim.Model to javafx.fxml;
 }
