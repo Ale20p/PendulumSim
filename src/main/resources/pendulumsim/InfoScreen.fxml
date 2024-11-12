@@ -3,17 +3,18 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.Controller.InfoScreenHandler">
    <children>
-      <Button layoutX="5.0" layoutY="713.0" mnemonicParsing="false" onAction="#backToStartEvent" prefHeight="72.0" prefWidth="198.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4; -fx-border-radius: 4;" text="Back" textFill="#ffb0b0">
+      <Button layoutX="14.0" layoutY="706.0" mnemonicParsing="false" onAction="#backToStartEvent" prefHeight="72.0" prefWidth="198.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4; -fx-border-radius: 4;" text="Back" textFill="#ffb0b0">
          <font>
             <Font size="34.0" />
          </font>
       </Button>
-      <Text fill="#ffb0b0" layoutX="546.0" layoutY="97.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INFO" wrappingWidth="108.13671875">
+      <Text fill="#ffb0b0" layoutX="551.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="INFO" textAlignment="CENTER">
          <font>
             <Font name="Cambria" size="45.0" />
          </font>
@@ -32,5 +33,27 @@
             </Button>
          </buttons>
       </ButtonBar>
+      <Text fill="#ffb0b0" layoutX="552.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The Physics :" textAlignment="CENTER">
+         <font>
+            <Font name="Berlin Sans FB" size="21.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffebca" height="135.0" layoutX="332.0" layoutY="187.0" stroke="#ffd09b" strokeType="INSIDE" strokeWidth="6.0" width="537.0" />
+      <Text fill="#ffb0b0" layoutX="344.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The application PendulumSim was developed by Tristan Giannopoulos and Allesandro &lt;Insert Last Name&gt;. It is an application meant to simulate the movement of a pendulum without friction involving physics equations to create an animation. The knowledge used involving physics comes from NYC course offered at Vanier, Waves &amp; optics." wrappingWidth="513.248046875">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="#ffb0b0" layoutX="509.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="About PendulumSim :" textAlignment="CENTER">
+         <font>
+            <Font name="Berlin Sans FB" size="21.0" />
+         </font>
+      </Text>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffebca" height="135.0" layoutX="332.0" layoutY="400.0" stroke="#ffd09b" strokeType="INSIDE" strokeWidth="6.0" width="537.0" />
+      <Text fill="#ffb0b0" layoutX="343.0" layoutY="423.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The movement of a pendulum can be described using its rotation, length, and the force of gravity acting upon it." wrappingWidth="513.248046875">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

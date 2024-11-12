@@ -8,9 +8,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.Controller.SettingsScreenHandler">
    <children>
-      <Text fill="#ffb0b0" layoutX="501.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SETTINGS">
+      <Text fill="#ffb0b0" layoutX="501.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SETTINGS" textAlignment="CENTER">
          <font>
-            <Font size="46.0" />
+            <Font name="Cambria" size="45.0" />
          </font>
       </Text>
       <Button layoutX="14.0" layoutY="706.0" mnemonicParsing="false" onAction="#backToStartEvent" prefHeight="72.0" prefWidth="198.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4; -fx-border-radius: 4;" text="Back" textFill="#ffb0b0">
