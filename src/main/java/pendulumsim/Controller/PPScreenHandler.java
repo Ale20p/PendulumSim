@@ -102,58 +102,52 @@ public class PPScreenHandler implements Initializable {
 
     private void updateCalculations() {
         try {
-            // Parse length from input fields and update display and pendulum components
+            // update length from input fields and update display and pendulum components
             if (!lengthInput.getText().isEmpty()) {
                 length = Double.parseDouble(lengthInput.getText());
                 lengthSlider.setValue(length);
                 string.setHeight(length);
                 ball.setLayoutY(length);
-            } else {
+            } else if (lengthSlider.getValue() != 0.0) {
                 length = lengthSlider.getValue();
                 lengthInput.setText(String.valueOf(length));
                 string.setHeight(length);
                 ball.setLayoutY(length);
             }
 
-            // Parse gravity
+            // update gravity
             if (!gravityInput.getText().isEmpty()) {
                 gravity = Double.parseDouble(gravityInput.getText());
-            } else {
-                gravity = defaultGravity;
-                gravityInput.setText(String.valueOf(gravity));
             }
 
-            // Parse amplitude
+            // update amplitude
             if (!amplitudeInput.getText().isEmpty()) {
                 amplitude = Double.parseDouble(amplitudeInput.getText());
-            } else {
-                amplitude = defaultAmplitude;
-                amplitudeInput.setText(String.valueOf(amplitude));
             }
 
             // Parse mass
             if (!massInput.getText().isEmpty()) {
                 mass = Double.parseDouble(massInput.getText());
-                if (mass > 70.0) mass = 70.0; // Cap the mass to keep visuals consistent
-                else if (mass < 25.0) mass = 25.0;
-                ball.setRadius(mass);
-            } else {
-                mass = defaultMass;
-                massInput.setText(String.valueOf(mass));
                 ball.setRadius(mass);
             }
 
-            // Calculate and display period
-            period = Equations.calculatePeriod(length, gravity);
-            periodInput.setText(String.format("%.2f", period));
+            // Period and Angular Frequency Calculations
+            if (length > 0 && gravity > 0) {
+                period = Equations.calculatePeriod(length, gravity);
+                periodInput.setText(String.format("%.2f", period));
 
-            // Calculate and display angular frequency
-            angularFrequency = Equations.calculateAngularFrequency(length, gravity);
-            angularFrequencyInput.setText(String.format("%.2f", angularFrequency));
+                angularFrequency = Equations.calculateAngularFrequency(length, gravity);
+                angularFrequencyInput.setText(String.format("%.2f", angularFrequency));
 
-            // Calculate and display velocity
-            velocity = Equations.calculateVelocity(amplitude, angularFrequency, period);
-            velocityInput.setText(String.format("%.2f", velocity));
+                // Velocity Calculation
+                velocity = Equations.calculateVelocity(amplitude, angularFrequency, period);
+                velocityInput.setText(String.format("%.2f", velocity));
+
+                // Displacement Calculation
+                displacement = Equations.calculateDisplacement(amplitude, angularFrequency, time);
+                displacementInput.setText(String.format("%.2f", displacement));
+            }
+
 
             // Update animation to match new parameters
             updateAnimation();
@@ -182,7 +176,6 @@ public class PPScreenHandler implements Initializable {
         animation.getKeyFrames().addAll(startFrame, endFrame);
         animation.setAutoReverse(true);
         animation.setCycleCount(Timeline.INDEFINITE);
-        animation.play();
     }
 
 

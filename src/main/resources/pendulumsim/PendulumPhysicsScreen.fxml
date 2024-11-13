@@ -29,7 +29,7 @@
       <Button fx:id="startButton" layoutX="487.0" layoutY="616.0" mnemonicParsing="false" onAction="#startEvent" text="Start" />
       <Button fx:id="pauseButton" layoutX="577.0" layoutY="616.0" mnemonicParsing="false" onAction="#pauseEvent" text="Pause" />
       <Button fx:id="resetButton" layoutX="681.0" layoutY="616.0" mnemonicParsing="false" onAction="#resetEvent" text="Reset" />
-      <Slider fx:id="lengthSlider" blockIncrement="40.0" layoutX="1085.0" layoutY="302.0" max="500.0" orientation="VERTICAL" scaleX="3.0" scaleY="3.0" />
+      <Slider fx:id="lengthSlider" blockIncrement="40.0" layoutX="1085.0" layoutY="302.0" max="500.0" orientation="VERTICAL" scaleX="3.0" scaleY="3.0" showTickLabels="true" showTickMarks="true" />
       <Pane fx:id="pendulumHolder" layoutX="559.0" layoutY="150.0" prefWidth="130.0">
          <children>
             <Rectangle fx:id="string" arcHeight="5.0" arcWidth="6.0" fill="#ffb0b0" height="240.0" layoutX="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="10.0" />
