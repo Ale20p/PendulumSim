@@ -50,7 +50,15 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <Text layoutX="294.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Period" />
-      <TextField fx:id="periodInput" layoutX="346.0" layoutY="709.0" promptText="Period value" />
+      <Text layoutX="284.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Period" />
+      <TextField fx:id="periodInput" layoutX="284.0" layoutY="679.0" promptText="Period value" />
+      <Text layoutX="496.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Angular Frequency " />
+      <TextField fx:id="angularFrequencyInput" layoutX="496.0" layoutY="679.0" promptText="Angular frequency value" />
+      <Text layoutX="716.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Velocity" />
+      <TextField fx:id="velocityInput" layoutX="716.0" layoutY="679.0" promptText="Velocity value" />
+      <Text layoutX="433.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceleration" />
+      <TextField fx:id="accelerationInput" layoutX="391.0" layoutY="738.0" promptText="Acceleration value" />
+      <Text layoutX="645.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displacement" />
+      <TextField fx:id="displacementInput" layoutX="607.0" layoutY="738.0" promptText="Displacement value" />
    </children>
 </AnchorPane>
