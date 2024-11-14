@@ -206,7 +206,7 @@ public class PPScreenHandler implements Initializable {
             string.setHeight(length);
             ball.setLayoutY(length);
         } else if (lengthInput.getText().isEmpty()) {
-            lengthInput.setText(String.valueOf(lengthSlider.getValue()));
+            lengthInput.setText(String.format("%.2f", lengthSlider.getValue()));
             length = lengthSlider.getValue();
             string.setHeight(length);
             ball.setLayoutY(length);
@@ -295,7 +295,38 @@ public class PPScreenHandler implements Initializable {
     }
 
     public void resetEvent() throws IOException {
+        animation.stop();
+        time = 0;
 
+        length = defaultLength;
+        gravity = defaultGravity;
+        amplitude = defaultAmplitude;
+        mass = defaultMass;
+
+        lengthInput.setText(String.valueOf(defaultLength));
+        gravityInput.setText(String.valueOf(defaultGravity));
+        amplitudeInput.setText(String.valueOf(defaultAmplitude));
+        massInput.setText(String.valueOf(defaultMass));
+        lengthSlider.setValue(defaultLength);
+
+        period = Equations.calculatePeriod(length, gravity);
+        angularFrequency = Equations.calculateAngularFrequency(length, gravity);
+        velocity = Equations.calculateVelocity(amplitude, angularFrequency, time);
+        acceleration = Equations.calculateAcceleration(amplitude, angularFrequency, time);
+        displacement = Equations.calculateDisplacement(amplitude, angularFrequency, time);
+
+        periodInput.setText(String.format("%.2f", period));
+        angularFrequencyInput.setText(String.format("%.2f", angularFrequency));
+        velocityInput.setText(String.format("%.2f", Math.abs(velocity)));
+        accelerationInput.setText(String.format("%.2f", Math.abs(acceleration)));
+        displacementInput.setText(String.format("%.2f", Math.abs(displacement)));
+
+        string.setHeight(length);
+        ball.setLayoutY(length);
+        ball.setRadius(mass);
+
+        pendulumHolder.getTransforms().clear();
+        updateAnimation();;
     }
 
     @FXML
