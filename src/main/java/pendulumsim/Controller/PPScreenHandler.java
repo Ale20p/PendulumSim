@@ -59,6 +59,9 @@ public class PPScreenHandler implements Initializable {
     private double defaultAmplitude = 75;
     private double placeholderAmplitude = 0;
 
+    private boolean isUpdatingFromSlider = false;
+    private boolean isUpdatingFromTextInput = false;
+
     public void setStage(Stage stage) {
         mstage = stage;
     }
@@ -69,8 +72,22 @@ public class PPScreenHandler implements Initializable {
         mass = defaultMass;
         amplitude = placeholderAmplitude;
 
-        lengthInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
-        lengthSlider.valueProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
+        lengthInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!isUpdatingFromSlider) { // Only update if the change is not from the slider
+                isUpdatingFromTextInput = true;
+                updateCalculations();
+                isUpdatingFromTextInput = false;
+            }
+        });
+
+        lengthSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (!isUpdatingFromTextInput) { // Only update if the change is not from the text input
+                isUpdatingFromSlider = true;
+                updateCalculations();
+                isUpdatingFromSlider = false;
+            }
+        });
+
         gravityInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
         amplitudeInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
         massInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
@@ -102,17 +119,19 @@ public class PPScreenHandler implements Initializable {
 
     private void updateCalculations() {
         try {
-            // update length from input fields and update display and pendulum components
-            if (!lengthInput.getText().isEmpty()) {
-                length = Double.parseDouble(lengthInput.getText());
-                lengthSlider.setValue(length);
-                string.setHeight(length);
-                ball.setLayoutY(length);
-            } else if (lengthSlider.getValue() != 0.0) {
+            if (isUpdatingFromSlider) {
                 length = lengthSlider.getValue();
-                lengthInput.setText(String.valueOf(length));
+                lengthInput.setText(String.valueOf(length)); // Update text input based on slider
                 string.setHeight(length);
                 ball.setLayoutY(length);
+            }
+            if (isUpdatingFromTextInput) {
+                if (!lengthInput.getText().isEmpty()) {
+                    length = Double.parseDouble(lengthInput.getText());
+                    lengthSlider.setValue(length); // Update slider based on input
+                    string.setHeight(length);
+                    ball.setLayoutY(length);
+                }
             }
 
             // update gravity
