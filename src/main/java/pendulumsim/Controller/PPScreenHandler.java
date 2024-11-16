@@ -72,6 +72,7 @@ public class PPScreenHandler implements Initializable {
         mass = defaultMass;
         amplitude = placeholderAmplitude;
 
+        // Listeners
         lengthInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!isUpdatingFromSlider) { // Only update if the change is not from the slider
                 isUpdatingFromTextInput = true;
@@ -79,7 +80,6 @@ public class PPScreenHandler implements Initializable {
                 isUpdatingFromTextInput = false;
             }
         });
-
         lengthSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             if (!isUpdatingFromTextInput) { // Only update if the change is not from the text input
                 isUpdatingFromSlider = true;
@@ -87,7 +87,6 @@ public class PPScreenHandler implements Initializable {
                 isUpdatingFromSlider = false;
             }
         });
-
         gravityInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
         amplitudeInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
         massInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
@@ -147,7 +146,13 @@ public class PPScreenHandler implements Initializable {
             // Parse mass
             if (!massInput.getText().isEmpty()) {
                 mass = Double.parseDouble(massInput.getText());
-                ball.setRadius(mass);
+                if (mass > 70) {
+                    ball.setRadius(70.0);
+                } else if (mass < 20.0) {
+                    ball.setRadius(20.0);
+                } else {
+                    ball.setRadius(mass);
+                }
             }
 
             // Period and Angular Frequency Calculations
@@ -180,8 +185,9 @@ public class PPScreenHandler implements Initializable {
         double positionX = pendulumHolder.getPrefWidth() / 2;
         double halfPeriod = period / 2;
 
-        Rotate rotation = new Rotate(amplitude, positionX, 0);
+
         pendulumHolder.getTransforms().clear();
+        Rotate rotation = new Rotate(0, positionX, 0);
         pendulumHolder.getTransforms().add(rotation);
 
         KeyValue startKeyValue = new KeyValue(rotation.angleProperty(), -amplitude, Interpolator.LINEAR);
@@ -300,7 +306,7 @@ public class PPScreenHandler implements Initializable {
 
         length = defaultLength;
         gravity = defaultGravity;
-        amplitude = defaultAmplitude;
+        amplitude = 0;
         mass = defaultMass;
 
         lengthInput.setText(String.valueOf(defaultLength));
@@ -326,6 +332,9 @@ public class PPScreenHandler implements Initializable {
         ball.setRadius(mass);
 
         pendulumHolder.getTransforms().clear();
+        Rotate rotation = new Rotate(0, pendulumHolder.getWidth() / 2, 0);
+        pendulumHolder.getTransforms().add(rotation);
+
         updateAnimation();;
     }
 
