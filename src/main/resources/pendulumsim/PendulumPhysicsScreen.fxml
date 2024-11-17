@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -15,7 +16,6 @@
    <children>
       <TextField fx:id="lengthInput" layoutX="118.0" layoutY="595.0" promptText="enter legnth" />
       <TextField fx:id="amplitudeInput" layoutX="118.0" layoutY="561.0" promptText="enter amplitude" />
-      <TextField fx:id="gravityInput" layoutX="118.0" layoutY="521.0" promptText="enter gravity" />
       <TextField fx:id="massInput" layoutX="118.0" layoutY="483.0" promptText="enter mass" />
       <Text layoutX="62.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mass" />
       <Text layoutX="57.0" layoutY="538.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gravity" />
@@ -29,7 +29,7 @@
       <Button fx:id="startButton" layoutX="487.0" layoutY="616.0" mnemonicParsing="false" onAction="#startEvent" text="Start" />
       <Button fx:id="pauseButton" layoutX="577.0" layoutY="616.0" mnemonicParsing="false" onAction="#pauseEvent" text="Pause" />
       <Button fx:id="resetButton" layoutX="681.0" layoutY="616.0" mnemonicParsing="false" onAction="#resetEvent" text="Reset" />
-      <Slider fx:id="lengthSlider" blockIncrement="40.0" layoutX="1085.0" layoutY="302.0" max="500.0" orientation="VERTICAL" scaleX="3.0" scaleY="3.0" showTickLabels="true" showTickMarks="true" />
+      <Slider fx:id="lengthSlider" blockIncrement="40.0" layoutX="1085.0" layoutY="302.0" majorTickUnit="35.0" max="385.0" orientation="VERTICAL" scaleX="3.0" scaleY="3.0" showTickLabels="true" showTickMarks="true" />
       <Pane fx:id="pendulumHolder" layoutX="559.0" layoutY="150.0" prefWidth="130.0">
          <children>
             <Rectangle fx:id="string" arcHeight="5.0" arcWidth="6.0" fill="#ffb0b0" height="240.0" layoutX="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="10.0" />
@@ -60,5 +60,6 @@
       <TextField fx:id="accelerationInput" layoutX="391.0" layoutY="738.0" promptText="Acceleration value" />
       <Text layoutX="645.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displacement" />
       <TextField fx:id="displacementInput" layoutX="607.0" layoutY="738.0" promptText="Displacement value" />
+      <ComboBox fx:id="gravityInput" layoutX="118.0" layoutY="521.0" prefWidth="150.0" promptText="choose gravity" />
    </children>
 </AnchorPane>

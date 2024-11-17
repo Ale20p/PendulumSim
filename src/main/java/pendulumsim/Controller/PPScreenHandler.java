@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -18,7 +19,6 @@ import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pendulumsim.Model.Equations;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,7 +31,7 @@ public class PPScreenHandler implements Initializable {
     @FXML TextField lengthInput;
     @FXML Slider lengthSlider;
     @FXML TextField amplitudeInput;
-    @FXML TextField gravityInput;
+    @FXML ComboBox<String> gravityInput;
     @FXML TextField massInput;
     @FXML TextField periodInput;
     @FXML Button backButton;
@@ -72,6 +72,16 @@ public class PPScreenHandler implements Initializable {
         mass = defaultMass;
         amplitude = placeholderAmplitude;
 
+        gravityInput.getItems().addAll(
+                "Earth: 9.81",
+                "Moon: 1.62",
+                "Mars: 3.71",
+                "Jupiter: 24.79",
+                "Venus: 8.87",
+                "Mercury: 3.70"
+        );
+        gravityInput.setValue("Earth: 9.81"); // Set default value
+
         // Listeners
         lengthInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!isUpdatingFromSlider) { // Only update if the change is not from the slider
@@ -87,7 +97,13 @@ public class PPScreenHandler implements Initializable {
                 isUpdatingFromSlider = false;
             }
         });
-        gravityInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
+        gravityInput.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                String[] parts = newValue.split(": ");
+                gravity = Double.parseDouble(parts[1]);
+                updateCalculations();
+            }
+        });
         amplitudeInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
         massInput.textProperty().addListener((observable, oldValue, newValue) -> updateCalculations());
 
@@ -127,6 +143,10 @@ public class PPScreenHandler implements Initializable {
             if (isUpdatingFromTextInput) {
                 if (!lengthInput.getText().isEmpty()) {
                     length = Double.parseDouble(lengthInput.getText());
+                    if (length > 385) {
+                        length = 385;
+                        lengthInput.setText("385"); // Correct the input text if it exceeds the limit
+                    }
                     lengthSlider.setValue(length); // Update slider based on input
                     string.setHeight(length);
                     ball.setLayoutY(length);
@@ -134,13 +154,19 @@ public class PPScreenHandler implements Initializable {
             }
 
             // update gravity
-            if (!gravityInput.getText().isEmpty()) {
-                gravity = Double.parseDouble(gravityInput.getText());
+            String selectedGravity = gravityInput.getValue();
+            if (selectedGravity != null) {
+                String[] parts = selectedGravity.split(": ");
+                gravity = Double.parseDouble(parts[1]);
             }
 
             // update amplitude
             if (!amplitudeInput.getText().isEmpty()) {
                 amplitude = Double.parseDouble(amplitudeInput.getText());
+                if (amplitude > 100) {
+                    amplitude = 100;
+                    amplitudeInput.setText("100");
+                }
             }
 
             // Parse mass
@@ -218,16 +244,21 @@ public class PPScreenHandler implements Initializable {
             ball.setLayoutY(length);
         } else {
             length = Double.parseDouble(lengthInput.getText());
+            if (length > 385) {
+                length = 385;
+                lengthInput.setText("385"); // Correct the input text if it exceeds the limit
+            }
             string.setHeight(length);
             ball.setLayoutY(length);
         }
 
         // Gravity
-        if (gravityInput.getText().isEmpty()) {
-            gravityInput.setText(String.valueOf(defaultGravity));
-            gravity = Double.parseDouble(gravityInput.getText());
+        String selectedGravity = gravityInput.getValue();
+        if (selectedGravity != null) {
+            String[] parts = selectedGravity.split(": ");
+            gravity = Double.parseDouble(parts[1]);
         } else {
-            gravity = Double.parseDouble(gravityInput.getText());
+            gravity = defaultGravity;
         }
 
         // Amplitude
@@ -236,6 +267,10 @@ public class PPScreenHandler implements Initializable {
             amplitude = Double.parseDouble(amplitudeInput.getText());
         } else {
             amplitude = Double.parseDouble(amplitudeInput.getText());
+        }
+        if (amplitude > 100) {
+            amplitude = 100;
+            amplitudeInput.setText("100.00");
         }
 
         // Mass
@@ -310,7 +345,7 @@ public class PPScreenHandler implements Initializable {
         mass = defaultMass;
 
         lengthInput.setText(String.valueOf(defaultLength));
-        gravityInput.setText(String.valueOf(defaultGravity));
+        gravityInput.setValue("Earth: 9.81");
         amplitudeInput.setText(String.valueOf(defaultAmplitude));
         massInput.setText(String.valueOf(defaultMass));
         lengthSlider.setValue(defaultLength);
