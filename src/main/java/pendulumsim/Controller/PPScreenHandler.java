@@ -53,7 +53,7 @@ public class PPScreenHandler implements Initializable {
     private double displacement;
     private double time;
 
-    private double defaultLength = 240;
+    private double defaultLength = 15;
     private double defaultGravity = 9.81;
     private double defaultMass = 45;
     private double defaultAmplitude = 75;
@@ -137,19 +137,19 @@ public class PPScreenHandler implements Initializable {
             if (isUpdatingFromSlider) {
                 length = lengthSlider.getValue();
                 lengthInput.setText(String.valueOf(length)); // Update text input based on slider
-                string.setHeight(length);
-                ball.setLayoutY(length);
+                string.setHeight(length*20);
+                ball.setLayoutY(length*20);
             }
             if (isUpdatingFromTextInput) {
                 if (!lengthInput.getText().isEmpty()) {
                     length = Double.parseDouble(lengthInput.getText());
-                    if (length > 385) {
-                        length = 385;
-                        lengthInput.setText("385"); // Correct the input text if it exceeds the limit
+                    if (length > lengthSlider.getMax()) {
+                        length = lengthSlider.getMax();
+                        lengthInput.setText(String.valueOf(lengthSlider.getMax())); // Correct the input text if it exceeds the limit
                     }
                     lengthSlider.setValue(length); // Update slider based on input
-                    string.setHeight(length);
-                    ball.setLayoutY(length);
+                    string.setHeight(length*20);
+                    ball.setLayoutY(length*20);
                 }
             }
 
@@ -235,21 +235,21 @@ public class PPScreenHandler implements Initializable {
         if (lengthInput.getText().isEmpty() && lengthSlider.getValue() == 0.0) {
             lengthInput.setText(String.valueOf(defaultLength));
             length = Double.parseDouble(lengthInput.getText());
-            string.setHeight(length);
-            ball.setLayoutY(length);
+            string.setHeight(length*20);
+            ball.setLayoutY(length*20);
         } else if (lengthInput.getText().isEmpty()) {
             lengthInput.setText(String.format("%.2f", lengthSlider.getValue()));
             length = lengthSlider.getValue();
-            string.setHeight(length);
-            ball.setLayoutY(length);
+            string.setHeight(length*20);
+            ball.setLayoutY(length*20);
         } else {
             length = Double.parseDouble(lengthInput.getText());
-            if (length > 385) {
-                length = 385;
-                lengthInput.setText("385"); // Correct the input text if it exceeds the limit
+            if (length > lengthSlider.getMax()) {
+                length = lengthSlider.getMax();
+                lengthInput.setText(String.valueOf(lengthSlider.getMax())); // Correct the input text if it exceeds the limit
             }
-            string.setHeight(length);
-            ball.setLayoutY(length);
+            string.setHeight(length*20);
+            ball.setLayoutY(length*20);
         }
 
         // Gravity

@@ -14,23 +14,35 @@
 
 <AnchorPane fx:id="PPSpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.Controller.PPScreenHandler">
    <children>
-      <TextField fx:id="lengthInput" layoutX="118.0" layoutY="595.0" promptText="enter legnth" />
-      <TextField fx:id="amplitudeInput" layoutX="118.0" layoutY="561.0" promptText="enter amplitude" />
-      <TextField fx:id="massInput" layoutX="118.0" layoutY="483.0" promptText="enter mass" />
-      <Text layoutX="62.0" layoutY="500.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mass" />
-      <Text layoutX="57.0" layoutY="538.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gravity" />
-      <Text layoutX="48.0" layoutY="578.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amplitude" />
-      <Text layoutX="57.0" layoutY="612.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Length" />
+      <TextField fx:id="lengthInput" layoutX="825.0" layoutY="709.0" prefHeight="25.0" prefWidth="149.0" promptText="enter length" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
+      <TextField fx:id="amplitudeInput" layoutX="556.0" layoutY="709.0" promptText="enter amplitude" style="-fx-border-color: FFD09B; -fx-border-width: 2;" />
+      <TextField fx:id="massInput" layoutX="300.0" layoutY="710.0" promptText="enter mass" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
+      <Text fill="#ffb0b0" layoutX="300.0" layoutY="700.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mass">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Text>
+      <Text fill="#ffb0b0" layoutX="520.0" layoutY="72.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gravity">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font></Text>
+      <Text fill="#ffb0b0" layoutX="559.0" layoutY="699.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amplitude">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Text>
+      <Text fill="#ffb0b0" layoutX="824.0" layoutY="699.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Length" wrappingWidth="56.923828125">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Text>
       <Button fx:id="backButton" layoutX="68.0" layoutY="692.0" mnemonicParsing="false" onAction="#backToStartEvent" prefHeight="58.0" prefWidth="136.0" style="-fx-background-color: FFECC8; -fx-border-color: FFD09B; -fx-border-width: 4; -fx-border-radius: 4;" text="Back" textFill="#ffb0b0">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
       <Button fx:id="startButton" layoutX="487.0" layoutY="616.0" mnemonicParsing="false" onAction="#startEvent" text="Start" />
-      <Button fx:id="pauseButton" layoutX="577.0" layoutY="616.0" mnemonicParsing="false" onAction="#pauseEvent" text="Pause" />
+      <Button fx:id="pauseButton" layoutX="576.0" layoutY="616.0" mnemonicParsing="false" onAction="#pauseEvent" prefWidth="48.0" text="Pause" />
       <Button fx:id="resetButton" layoutX="681.0" layoutY="616.0" mnemonicParsing="false" onAction="#resetEvent" text="Reset" />
-      <Slider fx:id="lengthSlider" blockIncrement="40.0" layoutX="1085.0" layoutY="302.0" majorTickUnit="35.0" max="385.0" orientation="VERTICAL" scaleX="3.0" scaleY="3.0" showTickLabels="true" showTickMarks="true" />
-      <Pane fx:id="pendulumHolder" layoutX="559.0" layoutY="150.0" prefWidth="130.0">
+      <Slider fx:id="lengthSlider" blockIncrement="1.0" layoutX="869.0" layoutY="321.0" majorTickUnit="1.0" max="15.0" minorTickCount="5" orientation="VERTICAL" prefHeight="211.0" prefWidth="88.0" scaleX="2.0" scaleY="2.0" showTickLabels="true" showTickMarks="true" />
+      <Pane fx:id="pendulumHolder" layoutX="535.0" layoutY="150.0" prefWidth="130.0">
          <children>
             <Rectangle fx:id="string" arcHeight="5.0" arcWidth="6.0" fill="#ffb0b0" height="240.0" layoutX="60.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="10.0" />
             <Circle fx:id="ball" fill="#ffecc8" layoutX="65.0" layoutY="240.0" radius="45.0" stroke="#ffd09b" strokeType="INSIDE" strokeWidth="4.0" />
@@ -50,16 +62,31 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <Text layoutX="284.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Period" />
-      <TextField fx:id="periodInput" layoutX="284.0" layoutY="679.0" promptText="Period value" />
-      <Text layoutX="496.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Angular Frequency " />
-      <TextField fx:id="angularFrequencyInput" layoutX="496.0" layoutY="679.0" promptText="Angular frequency value" />
-      <Text layoutX="716.0" layoutY="670.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Velocity" />
-      <TextField fx:id="velocityInput" layoutX="716.0" layoutY="679.0" promptText="Velocity value" />
-      <Text layoutX="433.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceleration" />
-      <TextField fx:id="accelerationInput" layoutX="391.0" layoutY="738.0" promptText="Acceleration value" />
-      <Text layoutX="645.0" layoutY="726.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displacement" />
-      <TextField fx:id="displacementInput" layoutX="607.0" layoutY="738.0" promptText="Displacement value" />
-      <ComboBox fx:id="gravityInput" layoutX="118.0" layoutY="521.0" prefWidth="150.0" promptText="choose gravity" />
+      <Text fill="#ffb0b0" layoutX="41.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Period">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Text>
+      <TextField fx:id="periodInput" editable="false" layoutX="41.0" layoutY="176.0" promptText="Period value" style="-fx-border-width: 2; -fx-border-color: FFD09B; -fx-border-radius: 4;" />
+      <Text fill="#ffb0b0" layoutX="41.0" layoutY="276.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Angular Frequency ">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Text>
+      <TextField fx:id="angularFrequencyInput" editable="false" layoutX="41.0" layoutY="286.0" promptText="Angular frequency value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
+      <Text fill="#ffb0b0" layoutX="41.0" layoutY="496.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Velocity">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Text>
+      <TextField fx:id="velocityInput" editable="false" layoutX="41.0" layoutY="506.0" promptText="Velocity value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
+      <Text fill="#ffb0b0" layoutX="41.0" layoutY="606.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceleration">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Text>
+      <TextField fx:id="accelerationInput" editable="false" layoutX="41.0" layoutY="616.0" promptText="Acceleration value" style="-fx-border-color: FFD09B; -fx-border-radius: 4; -fx-border-width: 2;" />
+      <Text fill="#ffb0b0" layoutX="41.0" layoutY="386.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displacement">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Text>
+      <TextField fx:id="displacementInput" editable="false" layoutX="41.0" layoutY="396.0" promptText="Displacement value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
+      <ComboBox fx:id="gravityInput" layoutX="605.0" layoutY="52.0" prefWidth="150.0" promptText="choose gravity" style="-fx-background-color: ffecc8;" />
    </children>
 </AnchorPane>
