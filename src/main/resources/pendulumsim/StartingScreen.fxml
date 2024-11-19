@@ -16,7 +16,7 @@
             <Font size="74.0" />
          </font>
       </Text>
-      <Text fill="#ffb0b0" layoutX="34.0" layoutY="773.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver 0.1.0">
+      <Text fill="#ffb0b0" layoutX="34.0" layoutY="773.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ver 0.2.0">
          <font>
             <Font size="22.0" />
          </font>
