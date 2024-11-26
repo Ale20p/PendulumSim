@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="PPSpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.Controller.PPScreenHandler">
+<AnchorPane fx:id="PPSpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: ffecc8;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pendulumsim.Controller.PPScreenHandler">
    <children>
       <TextField fx:id="lengthInput" layoutX="825.0" layoutY="709.0" prefHeight="25.0" prefWidth="149.0" promptText="enter length" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
       <TextField fx:id="amplitudeInput" layoutX="556.0" layoutY="709.0" promptText="enter amplitude" style="-fx-border-color: FFD09B; -fx-border-width: 2;" />
@@ -71,36 +71,56 @@
       </ButtonBar>
       <VBox layoutX="43.0" layoutY="208.0" prefHeight="462.0" prefWidth="204.0" spacing="8.0">
          <children>
-            <Text fill="#ffb0b0" strokeType="OUTSIDE" strokeWidth="0.0" text="Period">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="periodInput" editable="false" promptText="Period value" style="-fx-border-width: 2; -fx-border-color: FFD09B; -fx-border-radius: 4;" />
-            <Text fill="#ffb0b0" strokeType="OUTSIDE" strokeWidth="0.0" text="Angular Frequency ">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="angularFrequencyInput" editable="false" promptText="Angular frequency value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
-            <Text fill="#ffb0b0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displacement">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="displacementInput" editable="false" promptText="Displacement value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
-            <Text fill="#ffb0b0" strokeType="OUTSIDE" strokeWidth="0.0" text="Velocity">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="velocityInput" editable="false" promptText="Velocity value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
-            <Text fill="#ffb0b0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceleration">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="accelerationInput" editable="false" promptText="Acceleration value" style="-fx-border-color: FFD09B; -fx-border-radius: 4; -fx-border-width: 2;" />
+            <Pane>
+               <children>
+                  <Text fill="#ffb0b0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Period">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="periodInput" editable="false" layoutY="28.0" promptText="Period value" style="-fx-border-width: 2; -fx-border-color: FFD09B; -fx-border-radius: 4;" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <Text fill="#ffb0b0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Angular Frequency ">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="angularFrequencyInput" editable="false" layoutY="28.0" promptText="Angular frequency value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <Text fill="#ffb0b0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displacement">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="displacementInput" editable="false" layoutY="28.0" promptText="Displacement value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <Text fill="#ffb0b0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Velocity">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="velocityInput" editable="false" layoutY="28.0" promptText="Velocity value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
+               </children>
+            </Pane>
+            <Pane>
+               <children>
+                  <Text fill="#ffb0b0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceleration">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <TextField fx:id="accelerationInput" editable="false" layoutY="28.0" promptText="Acceleration value" style="-fx-border-color: FFD09B; -fx-border-radius: 4; -fx-border-width: 2;" />
+               </children>
+            </Pane>
          </children>
       </VBox>
       <ComboBox fx:id="gravityInput" layoutX="605.0" layoutY="52.0" prefWidth="150.0" promptText="choose gravity" style="-fx-background-color: ffecc8; -fx-border-color: FFD09B; -fx-border-width: 2;" />
