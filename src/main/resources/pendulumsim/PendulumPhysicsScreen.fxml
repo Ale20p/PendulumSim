@@ -69,9 +69,9 @@
             </Button>
          </buttons>
       </ButtonBar>
-      <VBox layoutX="43.0" layoutY="208.0" prefHeight="462.0" prefWidth="204.0" spacing="8.0">
+      <VBox fx:id="displaybox" layoutX="43.0" layoutY="208.0" prefHeight="462.0" prefWidth="204.0" spacing="8.0">
          <children>
-            <Pane>
+            <Pane fx:id="paneperiod">
                <children>
                   <Text fill="#ffb0b0" layoutY="16.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Period">
                      <font>
@@ -81,7 +81,7 @@
                   <TextField fx:id="periodInput" editable="false" layoutY="28.0" promptText="Period value" style="-fx-border-width: 2; -fx-border-color: FFD09B; -fx-border-radius: 4;" />
                </children>
             </Pane>
-            <Pane>
+            <Pane fx:id="paneangular">
                <children>
                   <Text fill="#ffb0b0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Angular Frequency ">
                      <font>
@@ -91,7 +91,7 @@
                   <TextField fx:id="angularFrequencyInput" editable="false" layoutY="28.0" promptText="Angular frequency value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
                </children>
             </Pane>
-            <Pane>
+            <Pane fx:id="panedisplacement">
                <children>
                   <Text fill="#ffb0b0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displacement">
                      <font>
@@ -101,7 +101,7 @@
                   <TextField fx:id="displacementInput" editable="false" layoutY="28.0" promptText="Displacement value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
                </children>
             </Pane>
-            <Pane>
+            <Pane fx:id="panevelocity">
                <children>
                   <Text fill="#ffb0b0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Velocity">
                      <font>
@@ -111,7 +111,7 @@
                   <TextField fx:id="velocityInput" editable="false" layoutY="28.0" promptText="Velocity value" style="-fx-border-color: FFD09B; -fx-border-width: 2; -fx-border-radius: 4;" />
                </children>
             </Pane>
-            <Pane>
+            <Pane fx:id="paneacceleration">
                <children>
                   <Text fill="#ffb0b0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Acceleration">
                      <font>
@@ -124,7 +124,7 @@
          </children>
       </VBox>
       <ComboBox fx:id="gravityInput" layoutX="605.0" layoutY="52.0" prefWidth="150.0" promptText="choose gravity" style="-fx-background-color: ffecc8; -fx-border-color: FFD09B; -fx-border-width: 2;" />
-      <Text fill="#ffb0b0" layoutX="43.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displayed Values (5):">
+      <Text fx:id="dispvaluetext" fill="#ffb0b0" layoutX="43.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Displayed Values (5):">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>

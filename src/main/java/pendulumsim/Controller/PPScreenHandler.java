@@ -1,5 +1,8 @@
 package pendulumsim.Controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonWriter;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,13 +15,19 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import pendulumsim.Model.Equations;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,6 +49,13 @@ public class PPScreenHandler implements Initializable {
     @FXML TextField velocityInput;
     @FXML TextField accelerationInput;
     @FXML TextField displacementInput;
+    @FXML Pane paneperiod;
+    @FXML Pane paneangular;
+    @FXML Pane panedisplacement;
+    @FXML Pane panevelocity;
+    @FXML Pane paneacceleration;
+    @FXML VBox displaybox;
+    @FXML Text dispvaluetext;
 
     private double length;
     private double gravity;
@@ -52,6 +68,8 @@ public class PPScreenHandler implements Initializable {
     private Timeline animation;
     private double displacement;
     private double time;
+    private JsonObject dataobj;
+    private int displayvaluecount = 5;
 
     private double defaultLength = 15;
     private double defaultGravity = 9.81;
@@ -71,6 +89,36 @@ public class PPScreenHandler implements Initializable {
         gravity = defaultGravity;
         mass = defaultMass;
         amplitude = placeholderAmplitude;
+
+        //removes any element not used
+        Gson gson = new Gson();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("src/main/java/pendulumsim/Data/Data.JSON"));
+            dataobj = gson.fromJson(br, JsonObject.class);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        if (!dataobj.get("Period").getAsBoolean()) {
+            displayvaluecount -= 1;
+            displaybox.getChildren().remove(paneperiod);
+        }
+        if (!dataobj.get("Angular").getAsBoolean()) {
+            displayvaluecount -= 1;
+            displaybox.getChildren().remove(paneangular);
+        }
+        if (!dataobj.get("Displacement").getAsBoolean()) {
+            displayvaluecount -= 1;
+            displaybox.getChildren().remove(panedisplacement);
+        }
+        if (!dataobj.get("Velocity").getAsBoolean()) {
+            displayvaluecount -= 1;
+            displaybox.getChildren().remove(panevelocity);
+        }
+        if (!dataobj.get("Acceleration").getAsBoolean()) {
+            displayvaluecount -= 1;
+            displaybox.getChildren().remove(paneacceleration);
+        }
+        dispvaluetext.setText("Diplayed Vaules ("+ displayvaluecount+"):");
 
         gravityInput.getItems().addAll(
                 "Earth: 9.81",
@@ -183,19 +231,27 @@ public class PPScreenHandler implements Initializable {
 
             // Period and Angular Frequency Calculations
             if (length > 0 && gravity > 0) {
+                if (dataobj.get("Period").getAsBoolean()) {
+                    periodInput.setText(String.format("%.2f", period));
+                }
                 period = Equations.calculatePeriod(length, gravity);
-                periodInput.setText(String.format("%.2f", period));
 
+                if(dataobj.get("Angular").getAsBoolean()) {
+                    angularFrequencyInput.setText(String.format("%.2f", angularFrequency));
+                }
                 angularFrequency = Equations.calculateAngularFrequency(length, gravity);
-                angularFrequencyInput.setText(String.format("%.2f", angularFrequency));
 
                 // Velocity Calculation
+                if (dataobj.get("Velocity").getAsBoolean()) {
+                    velocityInput.setText(String.format("%.2f", velocity));
+                }
                 velocity = Equations.calculateVelocity(amplitude, angularFrequency, period);
-                velocityInput.setText(String.format("%.2f", velocity));
 
                 // Displacement Calculation
+                if(dataobj.get("Displacement").getAsBoolean()) {
+                    displacementInput.setText(String.format("%.2f", displacement));
+                }
                 displacement = Equations.calculateDisplacement(amplitude, angularFrequency, time);
-                displacementInput.setText(String.format("%.2f", displacement));
             }
 
 
@@ -290,17 +346,24 @@ public class PPScreenHandler implements Initializable {
         }
 
         // Period
-        periodInput.setText(String.valueOf(Equations.calculatePeriod(length, gravity)));
-        period = Double.parseDouble(periodInput.getText());
-
+        if (dataobj.get("Period").getAsBoolean()) {
+            periodInput.setText(String.valueOf(Equations.calculatePeriod(length, gravity)));
+        }
         // Angular Frequency
-        angularFrequencyInput.setText(String.valueOf(Equations.calculateAngularFrequency(length, gravity)));
-        angularFrequency = Double.parseDouble(angularFrequencyInput.getText());
+        if (dataobj.get("Angular").getAsBoolean()) {
+            angularFrequencyInput.setText(String.valueOf(Equations.calculateAngularFrequency(length, gravity)));
+        }
 
         animation.play();
-        velocityUpdated.start();
-        accelerationUpdated.start();
-        displacementUpdated.start();
+        if (dataobj.get("Velocity").getAsBoolean()) {
+            velocityUpdated.start();
+        }
+        if (dataobj.get("Acceleration").getAsBoolean()) {
+            accelerationUpdated.start();
+        }
+        if (dataobj.get("Displacement").getAsBoolean()) {
+            displacementUpdated.start();
+        }
     }
 
     private AnimationTimer velocityUpdated = new AnimationTimer() {
@@ -341,7 +404,7 @@ public class PPScreenHandler implements Initializable {
 
         length = defaultLength;
         gravity = defaultGravity;
-        amplitude = 0;
+        amplitude = defaultAmplitude;
         mass = defaultMass;
 
         lengthInput.setText(String.valueOf(defaultLength));
@@ -356,18 +419,28 @@ public class PPScreenHandler implements Initializable {
         acceleration = Equations.calculateAcceleration(amplitude, angularFrequency, time);
         displacement = Equations.calculateDisplacement(amplitude, angularFrequency, time);
 
-        periodInput.setText(String.format("%.2f", period));
-        angularFrequencyInput.setText(String.format("%.2f", angularFrequency));
-        velocityInput.setText(String.format("%.2f", Math.abs(velocity)));
-        accelerationInput.setText(String.format("%.2f", Math.abs(acceleration)));
-        displacementInput.setText(String.format("%.2f", Math.abs(displacement)));
+        if (dataobj.get("Period").getAsBoolean()) {
+            periodInput.setText(String.format("%.2f", period));
+        }
+        if (dataobj.get("Angular").getAsBoolean()) {
+            angularFrequencyInput.setText(String.format("%.2f", angularFrequency));
+        }
+        if (dataobj.get("Velocity").getAsBoolean()) {
+            velocityInput.setText(String.format("%.2f", Math.abs(velocity)));
+        }
+        if (dataobj.get("Acceleration").getAsBoolean()) {
+            accelerationInput.setText(String.format("%.2f", Math.abs(acceleration)));
+        }
+        if (dataobj.get("Displacement").getAsBoolean()) {
+            displacementInput.setText(String.format("%.2f", Math.abs(displacement)));
+        }
 
-        string.setHeight(length);
-        ball.setLayoutY(length);
+        string.setHeight(length*20);
+        ball.setLayoutY(length*20);
         ball.setRadius(mass);
 
         pendulumHolder.getTransforms().clear();
-        Rotate rotation = new Rotate(0, pendulumHolder.getWidth() / 2, 0);
+        Rotate rotation = new Rotate(defaultAmplitude, pendulumHolder.getWidth() / 2, 0);
         pendulumHolder.getTransforms().add(rotation);
 
         updateAnimation();;
