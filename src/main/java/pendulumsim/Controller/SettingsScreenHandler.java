@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Slider;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -25,6 +26,9 @@ public class SettingsScreenHandler implements Initializable {
     @FXML CheckBox displacementcheck;
     @FXML CheckBox velocitycheck;
     @FXML CheckBox accelerationcheck;
+    @FXML CheckBox musictoggle;
+    @FXML Slider volumeslider;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Gson gson = new Gson();
@@ -36,10 +40,14 @@ public class SettingsScreenHandler implements Initializable {
             displacementcheck.setSelected(dataobj.get("Displacement").getAsBoolean());
             velocitycheck.setSelected(dataobj.get("Velocity").getAsBoolean());
             accelerationcheck.setSelected(dataobj.get("Acceleration").getAsBoolean());
+            musictoggle.setSelected(dataobj.get("Music").getAsBoolean());
+            volumeslider.setValue(dataobj.get("Volume").getAsDouble());
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+        if (musictoggle.isSelected()){
 
+        }
     }
 
     public void backToStartEvent() throws IOException {
@@ -51,6 +59,8 @@ public class SettingsScreenHandler implements Initializable {
         jw.name("Displacement").value(displacementcheck.isSelected());
         jw.name("Velocity").value(velocitycheck.isSelected());
         jw.name("Acceleration").value(accelerationcheck.isSelected());
+        jw.name("Music").value(musictoggle.isSelected());
+        jw.name("Volume").value(volumeslider.getValue());
         jw.endObject();
         jw.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/StartingScreen.fxml"));
@@ -70,6 +80,8 @@ public class SettingsScreenHandler implements Initializable {
         jw.name("Displacement").value(displacementcheck.isSelected());
         jw.name("Velocity").value(velocitycheck.isSelected());
         jw.name("Acceleration").value(accelerationcheck.isSelected());
+        jw.name("Music").value(musictoggle.isSelected());
+        jw.name("Volume").value(volumeslider.getValue());
         jw.endObject();
         jw.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/SettingsScreen.fxml"));
@@ -90,6 +102,8 @@ public class SettingsScreenHandler implements Initializable {
         jw.name("Displacement").value(displacementcheck.isSelected());
         jw.name("Velocity").value(velocitycheck.isSelected());
         jw.name("Acceleration").value(accelerationcheck.isSelected());
+        jw.name("Music").value(musictoggle.isSelected());
+        jw.name("Volume").value(volumeslider.getValue());
         jw.endObject();
         jw.close();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/pendulumsim/InfoScreen.fxml"));
