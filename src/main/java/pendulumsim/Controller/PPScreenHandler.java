@@ -2,13 +2,16 @@ package pendulumsim.Controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonWriter;
+
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -56,6 +59,7 @@ public class PPScreenHandler implements Initializable {
     @FXML Pane paneacceleration;
     @FXML VBox displaybox;
     @FXML Text dispvaluetext;
+    @FXML BarChart energyGraph;
 
     private double length;
     private double gravity;
@@ -70,6 +74,13 @@ public class PPScreenHandler implements Initializable {
     private double time;
     private JsonObject dataobj;
     private int displayvaluecount = 5;
+    private double kineticEnergy;
+    private double potentialEnergy;
+    private XYChart.Data<String, Number> kineticEnergyData;
+    private XYChart.Data<String, Number> potentialEnergyData;
+    private double amplitudeRadians;
+
+
 
     private double defaultLength = 15;
     private double defaultGravity = 9.81;
@@ -130,6 +141,21 @@ public class PPScreenHandler implements Initializable {
         );
         gravityInput.setValue("Earth: 9.81"); // Set default value
 
+        // Energy
+        NumberAxis yAxis = (NumberAxis) energyGraph.getYAxis();
+        yAxis.setAutoRanging(false);
+        yAxis.setLowerBound(0);
+        yAxis.setUpperBound(1000);
+//        yAxis.setTickUnit(1);
+        energyGraph.setLegendVisible(false);
+
+        kineticEnergyData = new XYChart.Data<>("Kinetic", kineticEnergy);
+        potentialEnergyData = new XYChart.Data<>("Potential", potentialEnergy);
+        XYChart.Series<String, Number> energySeries = new XYChart.Series<>();
+        energySeries.getData().add(kineticEnergyData);
+        energySeries.getData().add(potentialEnergyData);
+        energyGraph.getData().add(energySeries);
+
         // Listeners
         lengthInput.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!isUpdatingFromSlider) { // Only update if the change is not from the slider
@@ -157,7 +183,7 @@ public class PPScreenHandler implements Initializable {
 
         int positionX = (int) (pendulumHolder.getPrefWidth()/2);
         double halfPeriod = Equations.calculatePeriod(length, gravity) / 2;
-
+        
         Rotate rotation = new Rotate(amplitude, positionX, 0);
         pendulumHolder.getTransforms().add(rotation);
 
@@ -216,6 +242,7 @@ public class PPScreenHandler implements Initializable {
                     amplitudeInput.setText("100");
                 }
             }
+            amplitudeRadians = Math.toRadians(amplitude);
 
             // Parse mass
             if (!massInput.getText().isEmpty()) {
@@ -254,6 +281,11 @@ public class PPScreenHandler implements Initializable {
                 displacement = Equations.calculateDisplacement(amplitude, angularFrequency, time);
             }
 
+            // Update Energy
+            kineticEnergy = Equations.calculateKineticEnergy(mass, length, amplitudeRadians, angularFrequency, time);
+            potentialEnergy = Equations.calculatePotentialEnergy(mass, length, amplitudeRadians, angularFrequency, time, gravity);
+            kineticEnergyData.setYValue(kineticEnergy);
+            potentialEnergyData.setYValue(potentialEnergy);
 
             // Update animation to match new parameters
             updateAnimation();
@@ -328,6 +360,7 @@ public class PPScreenHandler implements Initializable {
             amplitude = 100;
             amplitudeInput.setText("100.00");
         }
+        amplitudeRadians = Math.toRadians(amplitude);
 
         // Mass
         if (massInput.getText().isEmpty()) {
@@ -349,10 +382,12 @@ public class PPScreenHandler implements Initializable {
         if (dataobj.get("Period").getAsBoolean()) {
             periodInput.setText(String.valueOf(Equations.calculatePeriod(length, gravity)));
         }
+
         // Angular Frequency
         if (dataobj.get("Angular").getAsBoolean()) {
             angularFrequencyInput.setText(String.valueOf(Equations.calculateAngularFrequency(length, gravity)));
         }
+
 
         animation.play();
         if (dataobj.get("Velocity").getAsBoolean()) {
@@ -364,6 +399,7 @@ public class PPScreenHandler implements Initializable {
         if (dataobj.get("Displacement").getAsBoolean()) {
             displacementUpdated.start();
         }
+        energyUpdated.start();
     }
 
     private AnimationTimer velocityUpdated = new AnimationTimer() {
@@ -393,18 +429,45 @@ public class PPScreenHandler implements Initializable {
         }
     };
 
+    private AnimationTimer energyUpdated = new AnimationTimer() {
+        @Override
+        public void handle(long now) {
+            if (animation.getStatus() != Animation.Status.RUNNING) {
+                return;
+            }
+            time = animation.getCurrentTime().toSeconds();
+
+            kineticEnergy = Equations.calculateKineticEnergy(mass, length, amplitudeRadians, angularFrequency, time);
+            potentialEnergy = Equations.calculatePotentialEnergy(mass, length, amplitudeRadians, angularFrequency, time, gravity);
+            kineticEnergyData.setYValue(kineticEnergy);
+            potentialEnergyData.setYValue(potentialEnergy);
+
+            // Debug statement
+//            System.out.println("Time: " + time + " KE: " + kineticEnergy + " PE: " + potentialEnergy);
+        }
+    };
 
     public void pauseEvent() throws IOException {
         animation.pause();
+        energyUpdated.stop();
+        velocityUpdated.stop();
+        accelerationUpdated.stop();
+        displacementUpdated.stop();
+        time = 0;
     }
 
     public void resetEvent() throws IOException {
         animation.stop();
+        energyUpdated.stop();
+        velocityUpdated.stop();
+        accelerationUpdated.stop();
+        displacementUpdated.stop();
         time = 0;
 
         length = defaultLength;
         gravity = defaultGravity;
         amplitude = defaultAmplitude;
+        amplitudeRadians = Math.toRadians(amplitude);
         mass = defaultMass;
 
         lengthInput.setText(String.valueOf(defaultLength));
@@ -418,6 +481,13 @@ public class PPScreenHandler implements Initializable {
         velocity = Equations.calculateVelocity(amplitude, angularFrequency, time);
         acceleration = Equations.calculateAcceleration(amplitude, angularFrequency, time);
         displacement = Equations.calculateDisplacement(amplitude, angularFrequency, time);
+
+//        kineticEnergy = Equations.calculateKineticEnergy(mass, length, amplitudeRadians, angularFrequency, time);
+//        potentialEnergy = Equations.calculatePotentialEnergy(mass, length, amplitudeRadians, angularFrequency, time, gravity);
+        kineticEnergy = 0;
+        potentialEnergy = 0;
+        kineticEnergyData.setYValue(kineticEnergy);
+        potentialEnergyData.setYValue(potentialEnergy);
 
         if (dataobj.get("Period").getAsBoolean()) {
             periodInput.setText(String.format("%.2f", period));
