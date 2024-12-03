@@ -10,9 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Slider;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,6 +31,8 @@ public class SettingsScreenHandler implements Initializable {
     @FXML CheckBox accelerationcheck;
     @FXML CheckBox musictoggle;
     @FXML Slider volumeslider;
+    Media media;
+    MediaPlayer musicplayer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -45,9 +50,24 @@ public class SettingsScreenHandler implements Initializable {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
-        if (musictoggle.isSelected()){
+            try {
+                media = new Media(getClass().getResource("/pendulumsim/pendulumtheme.mp3").toURI().toString());
+                 musicplayer = new MediaPlayer(media);
 
-        }
+                if (musictoggle.isSelected()) {
+                    musicplayer.setOnReady(() -> {
+                        System.out.println("Total Duration: " + musicplayer.getTotalDuration());
+                        musicplayer.play();
+                        musicplayer.setAutoPlay(true);
+                        musicplayer.setVolume(volumeslider.getValue()/50);
+                    });
+                }
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e);
+            }
+        volumeslider.valueProperty().addListener((observable, oldValue, newValue) -> {
+            musicplayer.setVolume(volumeslider.getValue()/50);
+        });
     }
 
     public void backToStartEvent() throws IOException {
@@ -113,5 +133,14 @@ public class SettingsScreenHandler implements Initializable {
         Scene scene = new Scene(root);
         mstage.setScene(scene);
 
+    }
+    @FXML
+    public void musiccheck(){
+        if (musictoggle.isSelected()){
+            musicplayer.play();
+            musicplayer.setAutoPlay(true);
+        } else {
+            musicplayer.pause();
+        }
     }
 }

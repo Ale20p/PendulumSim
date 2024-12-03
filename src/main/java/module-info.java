@@ -2,6 +2,8 @@ module pendulumsin {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.google.gson;
+    requires java.desktop;
+    requires javafx.media;
 
 
     opens pendulumsim to javafx.fxml;
