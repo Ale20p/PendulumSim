@@ -4,17 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import javafx.animation.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
@@ -33,10 +28,8 @@ import pendulumsim.Model.Equations;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PPScreenHandler implements Initializable {
@@ -63,7 +56,11 @@ public class PPScreenHandler implements Initializable {
     @FXML Pane paneacceleration;
     @FXML VBox displaybox;
     @FXML Text dispvaluetext;
-    @FXML BarChart energyGraph;
+    @FXML TextField mebox;
+    @FXML TextField kebox;
+    @FXML TextField pebox;
+    @FXML Rectangle kebar;
+    @FXML Rectangle pebar;
 
     private double length;
     private double gravity;
@@ -80,8 +77,9 @@ public class PPScreenHandler implements Initializable {
     private int displayvaluecount = 5;
     private double kineticEnergy;
     private double potentialEnergy;
-    private XYChart.Data<String, Number> kineticEnergyData;
-    private XYChart.Data<String, Number> potentialEnergyData;
+    private Timeline kineticanim;
+    private Timeline potentialanim;
+
     private double amplitudeRadians;
     private double mechanicalenergy;
 
@@ -109,6 +107,14 @@ public class PPScreenHandler implements Initializable {
         double tempvelocity = Equations.calculateVelocity(defaultAmplitude, angularFrequency,period/4);
         mechanicalenergy = Equations.calculateKineticEnergy(mass/1000,tempvelocity);
         potentialEnergy = mechanicalenergy;
+        double roundedmech = Math.round(mechanicalenergy);
+        mebox.setText(String.format("%.2f",roundedmech));
+        pebox.setText(String.format("%.2f",roundedmech));
+        kebox.setText("0");
+        kebar.setHeight(0);
+        kebar.setLayoutY(356);
+        pebar.setHeight(218);
+        pebar.setLayoutY(138);
 
         //removes any element not used
         Gson gson = new Gson();
@@ -150,26 +156,6 @@ public class PPScreenHandler implements Initializable {
         );
         gravityInput.setValue("Earth: 9.81"); // Set default value
 
-        // Energy
-        NumberAxis yAxis = (NumberAxis) energyGraph.getYAxis();
-        yAxis.setAutoRanging(false);
-        yAxis.setLowerBound(0);
-        yAxis.setUpperBound(100);
-//        yAxis.setTickUnit(1);
-        energyGraph.setLegendVisible(false);
-
-
-        System.out.println("Potential Energy"  + mechanicalenergy);
-
-        kineticEnergyData = new XYChart.Data<>("Kinetic", kineticEnergy);
-        potentialEnergyData = new XYChart.Data<>("Potential", potentialEnergy);
-        XYChart.Series<String, Number> energySeries = new XYChart.Series<>();
-        energySeries.getData().add(kineticEnergyData);
-        energySeries.getData().add(potentialEnergyData);
-        ObservableList<XYChart.Series<String,Number>> data = FXCollections.<XYChart.Series<String,Number>>observableArrayList();
-        data.add(energySeries);
-        energyGraph.setData(data);
-
 
         // Listeners
         lengthInput.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -208,6 +194,27 @@ public class PPScreenHandler implements Initializable {
 
         animation.setAutoReverse(true);
         animation.setCycleCount(Timeline.INDEFINITE);
+
+        KeyValue kinetichi =  new KeyValue(kebar.heightProperty(), 0);
+        KeyValue kineticpi =  new KeyValue(kebar.layoutYProperty(), 356);
+        KeyFrame kintecfi = new KeyFrame(Duration.ZERO, kinetichi,kineticpi);
+        KeyValue kinetichf =  new KeyValue(kebar.heightProperty(), 218);
+        KeyValue kineticpf =  new KeyValue(kebar.layoutYProperty(), 138);
+        KeyFrame kineticff = new KeyFrame(Duration.seconds(period/4), kinetichf,kineticpf);
+        kineticanim = new Timeline(kintecfi, kineticff);
+        kineticanim.setAutoReverse(true);
+        kineticanim.setCycleCount(Timeline.INDEFINITE);
+
+
+        KeyValue potentialhi =  new KeyValue(pebar.heightProperty(), 218);
+        KeyValue potentialpi =  new KeyValue(pebar.layoutYProperty(), 138);
+        KeyFrame potentialfi = new KeyFrame(Duration.ZERO, potentialhi,potentialpi);
+        KeyValue potentialhf = new KeyValue(pebar.heightProperty(), 0);
+        KeyValue potentialpf = new KeyValue(pebar.layoutYProperty(), 356);
+        KeyFrame potentialff = new KeyFrame(Duration.seconds(period/4), potentialhf,potentialpf);
+        potentialanim = new Timeline(potentialfi, potentialff);
+        potentialanim.setAutoReverse(true);
+        potentialanim.setCycleCount(Timeline.INDEFINITE);
 
         System.out.println("Pendulum Physics Screen initialized");
     }
@@ -297,10 +304,13 @@ public class PPScreenHandler implements Initializable {
             }
 
             // Update Energy
-            kineticEnergy = Equations.calculateKineticEnergy(mass/1000, velocity);
-            potentialEnergy = mechanicalenergy - potentialEnergy;
-            kineticEnergyData.setYValue(Math.round(kineticEnergy));
-            potentialEnergyData.setYValue(Math.round(potentialEnergy));
+            double tempvelocity = Equations.calculateVelocity(amplitude, angularFrequency,period/4);
+            mechanicalenergy = Math.round(Equations.calculateKineticEnergy(mass/1000,tempvelocity));
+            potentialEnergy = mechanicalenergy;
+            double roundedmech = Math.round(mechanicalenergy);
+            mebox.setText(String.format("%.2f",roundedmech));
+            pebox.setText(String.format("%.2f",roundedmech));
+            kebox.setText("0");
 
             // Update animation to match new parameters
             updateAnimation();
@@ -330,6 +340,33 @@ public class PPScreenHandler implements Initializable {
         animation.getKeyFrames().addAll(startFrame, endFrame);
         animation.setAutoReverse(true);
         animation.setCycleCount(Timeline.INDEFINITE);
+
+        KeyValue kinetichi =  new KeyValue(kebar.heightProperty(), 0);
+        KeyValue kineticpi =  new KeyValue(kebar.layoutYProperty(), 356);
+        KeyFrame kineticfi = new KeyFrame(Duration.ZERO, kinetichi,kineticpi);
+        KeyValue kinetichf =  new KeyValue(kebar.heightProperty(), 218);
+        KeyValue kineticpf =  new KeyValue(kebar.layoutYProperty(), 138);
+        KeyFrame kineticff = new KeyFrame(Duration.seconds(period/4), kinetichf,kineticpf);
+        kineticanim.stop();
+        kineticanim.getKeyFrames().clear();
+        kineticanim.getKeyFrames().addAll(kineticfi,kineticff);
+        kineticanim.setAutoReverse(true);
+        kineticanim.setCycleCount(Timeline.INDEFINITE);
+
+
+        KeyValue potentialhi =  new KeyValue(pebar.heightProperty(), 218);
+        KeyValue potentialpi =  new KeyValue(pebar.layoutYProperty(), 138);
+        KeyFrame potentialfi = new KeyFrame(Duration.ZERO, potentialhi,potentialpi);
+        KeyValue potentialhf = new KeyValue(pebar.heightProperty(), 0);
+        KeyValue potentialpf = new KeyValue(pebar.layoutYProperty(), 356);
+        KeyFrame potentialff = new KeyFrame(Duration.seconds(period/4), potentialhf,potentialpf);
+        potentialanim.stop();
+        potentialanim.getKeyFrames().clear();
+        potentialanim.getKeyFrames().addAll(potentialfi,potentialff);
+        potentialanim.setAutoReverse(true);
+        potentialanim.setCycleCount(Timeline.INDEFINITE);
+
+
     }
 
 
@@ -403,10 +440,10 @@ public class PPScreenHandler implements Initializable {
             angularFrequencyInput.setText(String.valueOf(Equations.calculateAngularFrequency(length, gravity)));
         }
 
-        //Mechanical Energy
-
-
         animation.play();
+        energyUpdated.start();
+        kineticanim.play();
+        potentialanim.play();
         if (dataobj.get("Velocity").getAsBoolean()) {
             velocityUpdated.start();
         }
@@ -416,7 +453,6 @@ public class PPScreenHandler implements Initializable {
         if (dataobj.get("Displacement").getAsBoolean()) {
             displacementUpdated.start();
         }
-        energyUpdated.start();
     }
 
     private AnimationTimer velocityUpdated = new AnimationTimer() {
@@ -448,40 +484,31 @@ public class PPScreenHandler implements Initializable {
 
     private AnimationTimer energyUpdated = new AnimationTimer() {
         @Override
-        public void handle(long now) {
-            if (animation.getStatus() != Animation.Status.RUNNING) {
-                return;
-            }
-            time = animation.getCurrentTime().toSeconds();
-
+        public void handle(long l) {
             kineticEnergy = Equations.calculateKineticEnergy(mass/1000, velocity);
             potentialEnergy = mechanicalenergy - kineticEnergy;
-            System.out.println("Kinetic: "+ kineticEnergy + ", Potential: " + potentialEnergy);
-            kineticEnergyData.setYValue(Math.round(kineticEnergy));
-            potentialEnergyData.setYValue(Math.round(potentialEnergy));
-            System.out.println(kineticEnergyData.getYValue());
-
-            // Debug statement
-//            System.out.println("Time: " + time + " KE: " + kineticEnergy + " PE: " + potentialEnergy);
+            kebox.setText(String.format("%.2f", kineticEnergy));
+            pebox.setText(String.format("%.2f", potentialEnergy));
         }
     };
 
     public void pauseEvent() throws IOException {
         animation.pause();
-        energyUpdated.stop();
+        kineticanim.pause();
+        potentialanim.pause();
         velocityUpdated.stop();
         accelerationUpdated.stop();
         displacementUpdated.stop();
         time = 0;
-        System.out.println(amplitude);
     }
 
     public void resetEvent() throws IOException {
         animation.stop();
-        energyUpdated.stop();
         velocityUpdated.stop();
         accelerationUpdated.stop();
         displacementUpdated.stop();
+        kineticanim.stop();
+        potentialanim.stop();
         time = 0;
 
         length = defaultLength;
@@ -489,6 +516,11 @@ public class PPScreenHandler implements Initializable {
         amplitude = defaultAmplitude;
         amplitudeRadians = Math.toRadians(amplitude);
         mass = defaultMass;
+
+        kebar.setHeight(0);
+        kebar.setLayoutY(356);
+        pebar.setHeight(218);
+        pebar.setLayoutY(138);
 
         lengthInput.setText(String.valueOf(defaultLength));
         gravityInput.setValue("Earth: 9.81");
@@ -503,16 +535,15 @@ public class PPScreenHandler implements Initializable {
         displacement = Equations.calculateDisplacement(amplitude, angularFrequency, time);
 
 
-        double tempvelocity = Equations.calculateVelocity(defaultAmplitude, angularFrequency,period/4);
+        double tempvelocity = Equations.calculateVelocity(amplitude, angularFrequency,period/4);
         mechanicalenergy = Equations.calculateKineticEnergy(mass/1000,tempvelocity);
         potentialEnergy = mechanicalenergy;
+        mebox.setText(String.format("%.2f",mechanicalenergy));
+        pebox.setText(String.format("%.2f",mechanicalenergy));
+        kebox.setText("0");
 
 //        kineticEnergy = Equations.calculateKineticEnergy(mass, length, amplitudeRadians, angularFrequency, time);
 //        potentialEnergy = Equations.calculatePotentialEnergy(mass, length, amplitudeRadians, angularFrequency, time, gravity);
-        kineticEnergy = 0;
-        potentialEnergy = mechanicalenergy;
-        kineticEnergyData.setYValue(kineticEnergy);
-        potentialEnergyData.setYValue(potentialEnergy);
 
         if (dataobj.get("Period").getAsBoolean()) {
             periodInput.setText(String.format("%.2f", period));
@@ -538,7 +569,7 @@ public class PPScreenHandler implements Initializable {
         Rotate rotation = new Rotate(defaultAmplitude, pendulumHolder.getWidth() / 2, 0);
         pendulumHolder.getTransforms().add(rotation);
 
-        updateAnimation();;
+        updateAnimation();
     }
 
     @FXML
