@@ -4,12 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import javafx.animation.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
@@ -33,6 +36,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class PPScreenHandler implements Initializable {
@@ -79,7 +83,7 @@ public class PPScreenHandler implements Initializable {
     private XYChart.Data<String, Number> kineticEnergyData;
     private XYChart.Data<String, Number> potentialEnergyData;
     private double amplitudeRadians;
-
+    private double mechanicalenergy;
 
 
     private double defaultLength = 15;
@@ -100,6 +104,11 @@ public class PPScreenHandler implements Initializable {
         gravity = defaultGravity;
         mass = defaultMass;
         amplitude = placeholderAmplitude;
+        angularFrequency = Equations.calculateAngularFrequency(length,gravity);
+        period = Equations.calculatePeriod(length,gravity);
+        double tempvelocity = Equations.calculateVelocity(defaultAmplitude, angularFrequency,period/4);
+        mechanicalenergy = Equations.calculateKineticEnergy(mass/1000,tempvelocity);
+        potentialEnergy = mechanicalenergy;
 
         //removes any element not used
         Gson gson = new Gson();
@@ -145,16 +154,22 @@ public class PPScreenHandler implements Initializable {
         NumberAxis yAxis = (NumberAxis) energyGraph.getYAxis();
         yAxis.setAutoRanging(false);
         yAxis.setLowerBound(0);
-        yAxis.setUpperBound(1000);
+        yAxis.setUpperBound(100);
 //        yAxis.setTickUnit(1);
         energyGraph.setLegendVisible(false);
+
+
+        System.out.println("Potential Energy"  + mechanicalenergy);
 
         kineticEnergyData = new XYChart.Data<>("Kinetic", kineticEnergy);
         potentialEnergyData = new XYChart.Data<>("Potential", potentialEnergy);
         XYChart.Series<String, Number> energySeries = new XYChart.Series<>();
         energySeries.getData().add(kineticEnergyData);
         energySeries.getData().add(potentialEnergyData);
-        energyGraph.getData().add(energySeries);
+        ObservableList<XYChart.Series<String,Number>> data = FXCollections.<XYChart.Series<String,Number>>observableArrayList();
+        data.add(energySeries);
+        energyGraph.setData(data);
+
 
         // Listeners
         lengthInput.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -282,10 +297,10 @@ public class PPScreenHandler implements Initializable {
             }
 
             // Update Energy
-            kineticEnergy = Equations.calculateKineticEnergy(mass, length, amplitudeRadians, angularFrequency, time);
-            potentialEnergy = Equations.calculatePotentialEnergy(mass, length, amplitudeRadians, angularFrequency, time, gravity);
-            kineticEnergyData.setYValue(kineticEnergy);
-            potentialEnergyData.setYValue(potentialEnergy);
+            kineticEnergy = Equations.calculateKineticEnergy(mass/1000, velocity);
+            potentialEnergy = mechanicalenergy - potentialEnergy;
+            kineticEnergyData.setYValue(Math.round(kineticEnergy));
+            potentialEnergyData.setYValue(Math.round(potentialEnergy));
 
             // Update animation to match new parameters
             updateAnimation();
@@ -388,6 +403,8 @@ public class PPScreenHandler implements Initializable {
             angularFrequencyInput.setText(String.valueOf(Equations.calculateAngularFrequency(length, gravity)));
         }
 
+        //Mechanical Energy
+
 
         animation.play();
         if (dataobj.get("Velocity").getAsBoolean()) {
@@ -437,10 +454,12 @@ public class PPScreenHandler implements Initializable {
             }
             time = animation.getCurrentTime().toSeconds();
 
-            kineticEnergy = Equations.calculateKineticEnergy(mass, length, amplitudeRadians, angularFrequency, time);
-            potentialEnergy = Equations.calculatePotentialEnergy(mass, length, amplitudeRadians, angularFrequency, time, gravity);
-            kineticEnergyData.setYValue(kineticEnergy);
-            potentialEnergyData.setYValue(potentialEnergy);
+            kineticEnergy = Equations.calculateKineticEnergy(mass/1000, velocity);
+            potentialEnergy = mechanicalenergy - kineticEnergy;
+            System.out.println("Kinetic: "+ kineticEnergy + ", Potential: " + potentialEnergy);
+            kineticEnergyData.setYValue(Math.round(kineticEnergy));
+            potentialEnergyData.setYValue(Math.round(potentialEnergy));
+            System.out.println(kineticEnergyData.getYValue());
 
             // Debug statement
 //            System.out.println("Time: " + time + " KE: " + kineticEnergy + " PE: " + potentialEnergy);
@@ -454,6 +473,7 @@ public class PPScreenHandler implements Initializable {
         accelerationUpdated.stop();
         displacementUpdated.stop();
         time = 0;
+        System.out.println(amplitude);
     }
 
     public void resetEvent() throws IOException {
@@ -482,10 +502,15 @@ public class PPScreenHandler implements Initializable {
         acceleration = Equations.calculateAcceleration(amplitude, angularFrequency, time);
         displacement = Equations.calculateDisplacement(amplitude, angularFrequency, time);
 
+
+        double tempvelocity = Equations.calculateVelocity(defaultAmplitude, angularFrequency,period/4);
+        mechanicalenergy = Equations.calculateKineticEnergy(mass/1000,tempvelocity);
+        potentialEnergy = mechanicalenergy;
+
 //        kineticEnergy = Equations.calculateKineticEnergy(mass, length, amplitudeRadians, angularFrequency, time);
 //        potentialEnergy = Equations.calculatePotentialEnergy(mass, length, amplitudeRadians, angularFrequency, time, gravity);
         kineticEnergy = 0;
-        potentialEnergy = 0;
+        potentialEnergy = mechanicalenergy;
         kineticEnergyData.setYValue(kineticEnergy);
         potentialEnergyData.setYValue(potentialEnergy);
 

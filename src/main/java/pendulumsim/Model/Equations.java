@@ -70,10 +70,7 @@ public class Equations {
      * @param time Time elapsed (in seconds).
      * @return Kinetic energy at the given time (in joules).
      */
-    public static double calculateKineticEnergy(double mass, double length, double amplitudeRadians, double angularFrequency, double time) {
-        double omega = angularFrequency;
-        double theta = amplitudeRadians * Math.cos(omega * time);
-        double velocity = length * omega * Math.sin(omega * time);
+    public static double calculateKineticEnergy(double mass, double velocity) {
         return 0.5 * mass * velocity * velocity;
     }
 
@@ -87,7 +84,7 @@ public class Equations {
      * @param gravity Acceleration due to gravity (in m/s^2).
      * @return Potential energy at the given time (in joules).
      */
-    public static double calculatePotentialEnergy(double mass, double length, double amplitudeRadians, double angularFrequency, double time, double gravity) {
+    public static double calculatePotentialEnergy(double mass, double length, double amplitudeRadians,double angularFrequency,double time, double gravity) {
         double theta = amplitudeRadians * Math.cos(angularFrequency * time);
         double height = length * (1 - Math.cos(theta));
         return mass * gravity * height;
